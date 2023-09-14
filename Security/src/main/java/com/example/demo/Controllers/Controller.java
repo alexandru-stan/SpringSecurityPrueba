@@ -16,7 +16,7 @@ public class Controller {
 	}
 	
 	@GetMapping("/mod")
-	@PreAuthorize("MOD")
+	@PreAuthorize("hasAuthority('ROLE_MOD')")
 	public String Mod() {
 		return "OK, you are a mod";
 	}
