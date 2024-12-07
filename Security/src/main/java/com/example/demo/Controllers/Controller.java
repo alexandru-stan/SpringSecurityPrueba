@@ -1,30 +1,40 @@
 package com.example.demo.Controllers;
 
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.Services.UserServices;
+
 @RestController
-@RequestMapping("/")
+@RequestMapping("/users")
 public class Controller {
 
+	@Autowired
+	UserServices service;
 	
-	@GetMapping("/home")
-	public String HelloWorld() {
-		return "Hello World";
+	@GetMapping("/key")
+	public String key(){
+
+		
+		return "Welcome!";
 	}
 	
-	@GetMapping("/mod")
-	@PreAuthorize("hasAuthority('ROLE_MOD')")
-	public String Mod() {
-		return "OK, you are a mod";
+	@GetMapping("/basic")
+	public Object[] basic() {
+		var u = SecurityContextHolder.getContext().getAuthentication();
+		return u.getAuthorities().toArray();
 	}
 	
-	@GetMapping("/admin")
-	public String Admin() {
-		return "OK, you are an admin";
-	}
 	
+	@PostMapping("/modify/{communityId}")
+	public void modify( String communityId) {
+		
+		
+	}
 	
 }
